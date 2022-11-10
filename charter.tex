@@ -208,7 +208,6 @@ Usuario final 	& Daniel Daza       & \empclientename	& Técnico 					\\ \hline
 %No dejar filas vacías; si no hay nada que poner en una fila entonces eliminarla.
 
 A continuación se listan las principales características de cada interesado.
- 
 \begin{itemize}
 	\item Auspiciante: siempre busca agregar valor al Usuario. Estar atento a sus recomendaciones.
 	\item Colaboradores: es difícil estimar los tiempos de sus trabajos, muchas veces porque algunas demoras no dependen en forma directa de ellos. Planificar con tiempo y consultar a menudo su avance.
@@ -247,41 +246,130 @@ Para el desarrollo del presente proyecto se supone que:
 \section{6. Requerimientos}
 \label{sec:requerimientos}
 
-\begin{consigna}{red}
-Los requerimientos deben numerarse y de ser posible estar agruparlos por afinidad, por ejemplo:
+% Los requerimientos deben numerarse y de ser posible estar agruparlos por afinidad, por ejemplo:
 
 \begin{enumerate}
+	\item Requerimientos de la interfaz
+	
+		\begin{enumerate}
+			\item Botones en el mando y frente del equipo, contactos Normales Abiertos, para interfaz digital. [SCRX-ER-0001-REQ0001]. \\
+				\begin{tabular}{l l} \\
+					B1 & selección de tiempo de Disparo (disminuye) \\
+					B2 & selección de tiempo de Disparo (aumenta) \\
+					B3 & selección de mA (disminuye) \\
+					B4 & selección de mA (aumenta) \\
+					B5 & selección de kV (disminuye) \\
+					B6 & selección de kV (aumenta) \\
+					B7 & activación de Preparación \\
+					B8 & activación de Disparo \\
+				\end{tabular} \\
+			\item Disparador de mano de doble efecto, el cual permite con una sola mano activar las etapas de Preparación y Disparo, de la misma forma que B7 y B8. Puede ser cableado o inalámbrico. [SCRX-ER-0001-REQ0002].
+			\item Display para mostrar información al Técnico, a saber, estado del equipo, kV, mA, tiempo de Disparo, avisos y alarmas. [SCRX-ER-0001-REQ0003]
+			\item Relays, activación con 5 V, contacto de 250 Vca 10 A. [SCRX-ER-0001-REQ0004]. \\
+				\begin{tabular}{l l} \\
+					R1: Relay de Preparación \\
+					R2: Relay de Disparo \\
+				\end{tabular} \\
+			\item Salidas optoacopladas de Disparo. [SCRX-ER-0001-REQ0005]. \\
+				\begin{tabular}{l l} \\
+					S1: salida 1 \\
+					S2: salida 2, normalmente complementaria a S1 \\
+				\end{tabular} \\
+			\item Alarmas. [SCRX-ER-0001-REQ0006]. \\
+				\begin{tabular}{l l} \\
+					A1 & Buzzer (alarma sonora) \\
+					A2 & Luz de Emergencia (alarma visual) \\
+				\end{tabular} \\
+			\item Leds indicadores. [SCRX-ER-0001-REQ0007]. \\
+				\begin{tabular}{l l} \\
+					L1 & led Verde, de Encendido \\
+					L2 & led Naranja, de Preparación \\
+					L3 & led Azul, de Disparo \\
+					L4 & led Rojo, de Error o Alarma \\
+				\end{tabular} \\
+		\end{enumerate}	
+	
+	\newpage
 	\item Requerimientos funcionales
 		\begin{enumerate}
-			\item El sistema debe...
-			\item Tal componente debe...
-			\item El usuario debe poder...
+			\item El sistema debe permitir el control de tiempo de Disparo, mediante los botones B1 y B2.
+				\begin{enumerate}
+					\item Con B1 y B2, se podrá modificar el tiempo de Disparo y mostrarlo en el Display. Los tiempos disponibles en ms, serán: 50, 100, 120, 150, 200, 250, 300, 400, 500, 600, 700, 800, 900, 1000, 1250, 1500, 1750, 2000, 2500, 3000. [SCRX-ER-0002-REQ0001].
+					\item El software deberá comenzar con un tiempo de Disparo inicial de 100ms. [SCRX-ER-0002-REQ0002].
+					\item Si se mantiene presionado B1 o B2 durante más de 1 segundo, el cambio de tiempo de Disparo se efectúa uno a continuación del otro, de forma incremental/decremental según el botón presionado, mientras no se suelte el mismo. [SCRX-ER-0002-REQ0003].
+					\item Si se mantienen presionados B1 y B2 simultáneamente durante más de dos segundos, se entra en modo Calibración. [SCRX-ER-0002-REQ0004].
+				\end{enumerate}
+			\item El sistema debe permitir la selección y control de mA, mediante los botones B3 y B4. Ésta es la corriente que se establece en el devanado primario del TFRX, durante el Disparo.
+				\begin{enumerate}
+					\item Con B3 y B4, se podrá modificar el mA y mostrarlo en el Display. Los valores de mA disponibles, serán: 5, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100. [SCRX-ER-0002-REQ0005].
+					\item El software deberá comenzar con un mA inicial de 5mA. [SCRX-ER-0002-REQ0006].
+					\item Si se mantiene presionado B3 o B4 durante más de un segundo, el cambio de mA se efectúa uno a continuación del otro, de forma incremental/decremental según el botón presionado, mientras no se suelte el mismo. [SCRX-ER-0002-REQ0007].
+				\end{enumerate}
+			\item El sistema debe permitir la selección y control de kV, mediante los botones B5 y B6. Ésta es la tensión que se establece en el devanado secundario del TFRX, la cual se aplica al Tubo de RX para generar radiación de forma controlada.
+				\begin{enumerate}
+					\item Con B5 y B6, se podrá modificar el kV y mostrarlo en el Display. Los valores de kV disponibles serán: 40, 50, 60, 70, 80, 90, 100. [SCRX-ER-0002-REQ0008].
+					\item El software deberá comenzar con un kV inicial de 40kV. [SCRX-ER-0002-REQ0009].
+					\item Si se mantiene presionado B5 o B6 durante más de 1 segundo, el cambio de kV se efectúa uno a continuación del otro, de forma incremental/decremental según el botón presionado, mientras no se suelte el mismo. [SCRX-ER-0002-REQ0010].
+				\end{enumerate}
+		 
+			\item El sistema debe brindar seguridad de Filamento. 
+				\begin{enumerate}
+				 \item No se permitirá Disparo si el Filamento no está encendido. En tal caso se activarán las alarmas sonora y visual. [SCRX-ER-0002-REQ0011].
+				\end{enumerate}
+			\item El sistema debe sensar y brindar seguridad de Línea. Ésta es la tensión de alimentación del equipo de RX, en Argentina 220 V a 50 Hz. Esta tensión se puede aplicar al TFRX de forma directa en equipos convencionales de LF, o se utiliza como fuente de energía para generar pulsos a través de inversores de diseño propio, en TFRX de equipos modernos de HF.
+				\begin{enumerate}
+					\item No se permitirá Disparo si la Línea del sistema no es adecuada (su valor está por debajo o por encima de valores normales). En tal caso se activarán las alarmas sonora y visual. [SCRX-ER-0002-REQ0012].
+				\end{enumerate}
+			\item El sistema debe permitir activación de etapas de Preparación y Disparo, mediante botones B7 y B8.
+				\begin{enumerate}
+					\item El sistema debe permitir activación de etapa de Preparación, con señal aislada eléctricamente a través de un Relay de Preparación. [SCRX-ER-0002-REQ0013].
+					\item El sistema debe permitir activación de etapa de Disparo, con señal aislada eléctricamente a través de un Relay de Disparo, para equipos convencionales. [SCRX-ER-0002-REQ0014].
+					\item El sistema debe permitir activación de etapa de Disparo, con dos señales aisladas eléctricamente a través optoacopladores de alta velocidad, para equipos modernos. [SCRX-ER-0002-REQ0015].
+					\item Con B7 se activa la etapa de Preparación (R1 cerrado, L2 encendido), y se queda en este estado esperando a B8. [SCRX-ER-0002-REQ0016].
+					\item Si B7 fue presionada y se suelta antes de presionar B8, se desactiva la etapa de  Preparación (R1 abierto, L2 apagado). [SCRX-ER-0002-REQ0017].
+					\item Si B7 fue presionada, y no se suelta durante más de 8 segundos, se desactiva la etapa de Preparación (R1 abierto, L2 apagado) y se queda a la espera de soltar B7, sin permitir otra acción. [SCRX-ER-0002-REQ0018].
+					\item Con B8 se activa la etapa de Disparo (R2 cerrado o S1/S2 activadas durante el tiempo de Disparo configurado, L3 encendido), según el estado de la etapa de Preparación: \\
+					Si se pulsó B8 luego de 1 segundo de estar en estado de Preparación, sin soltar B7. [SCRX-ER-0002-REQ0019]. \\
+					Si se pulsó B8 antes de 1 segundo de estar en estado Preparación, pero transcurre 1 segundo desde que se pulsó B7, y tanto B7 como B8 siguen presionados. [SCRX-ER-0002-REQ0020].
+					\item Si se pulsó B8 y no está activada la etapa de Preparación, se ignora el evento y no se entra a la etapa de Disparo (R2 abierto o S1/S2 desactivadas, L3 apagado). [SCRX-ER-0002-REQ0021].
+					\item Si se está ejecutando el Disparo y se suelta B8 antes de transcurrido el tiempo de Disparo configurado, se desactiva la etapa de Disparo (R2 abierto o S1/S2 desactivadas, L3 apagado). [SCRX-ER-0002-REQ0022].
+				\end{enumerate}
 		\end{enumerate}
-	\item Requerimientos de documentación
+		
+	\item Requerimientos de rendimiento 
+		\begin{enumerate}	
+			\item La etapa de Disparo debe actuar en un tiempo menor a 100ms luego de presionado  B8, siempre que se cumpla [SCRX-ER-0002-REQ0019] o [SCRX-ER-0002-REQ0020]. Esto se requiere para evitar movimientos involuntarios del paciente al que se le está realizando el estudio. [SCRX-ER-0003-REQ0001].
+			\item El tiempo de respuesta ante un cambio de parámetro (tiempo de Disparo, cambio de kV o cambio de mA) debe ser menor a 200ms desde que se presiona el respectivo pulsador. [SCRX-ER-0003-REQ0002].
+		\end{enumerate}
+	
+	\newpage
+	\item Requerimientos de flexibilidad
 		\begin{enumerate}
-			\item Requerimiento 1
-			\item Requerimiento 2 (prioridad menor)
+			\item Adaptación a equipos sin etapa de Preparación (el Filamento está siempre encendido) por lo que el Disparo es directo. [SCRX-ER-0004-REQ0001].
+			\item Adaptación a equipos que requieren tiempos de Disparo fuera de los estándar. [SCRX-ER-0004-REQ0002].
+			\item Adaptación a equipos que requieren distinta variedad en valores y cantidad de kV (equipos de diferente potencia). [SCRX-ER-0004-REQ0003].
+			\item Adaptación a equipos que requieren distinta variedad en valores y cantidad de mA (equipos con mA fijo o con sólo dos opciones, foco Fino y foco Grueso). [SCRX-ER-0004-REQ0004]. 
 		\end{enumerate}
-	\item Requerimiento de testing...
-	\item Requerimientos de la interfaz...
-	\item Requerimientos interoperabilidad...
-	\item etc...
+	\item Requerimientos opcionales, a futuro
+		\begin{enumerate}
+			\item El sistema deberá ser capaz de enviar información a una computadora o celular, para monotireo y aviso de Alarmas a distancia. [SCRX-ER-0005-REQ0001].
+			\item El sistema deberá contar con una pantalla táctil para minimizar los componentes mecánicos tales como pulsadores, minimizando el tiempo de instalación. [SCRX-ER-0005-REQ0002].
+			\item El sistema deberá ser capaz de almacenar información de cantidad de disparos, configuración y fecha de cada uno, en forma de historial, el cual podrá ser accedido en cualquier momento de manera remota. [SCRX-ER-0005-REQ0003].
+		\end{enumerate}
+	
+	\item Requerimientos de diseño de PCB
+		\begin{enumerate}
+			\item El diseño de todas las PCB involucradas en el sistema, deberá ser realizado teniendo en cuenta las buenas prácticas propuestas por las normas IPC. [SCRX-ER-0006-REQ0001].
+		\end{enumerate}
 \end{enumerate}
 
-Leyendo los requerimientos se debe poder interpretar cómo será el proyecto y su funcionalidad.
+% Leyendo los requerimientos se debe poder interpretar cómo será el proyecto y su funcionalidad. Indicar claramente cuál es la prioridad entre los distintos requerimientos y si hay requerimientos opcionales. 
+% No olvidarse de que los requerimientos incluyen a las regulaciones y normas vigentes!!!
+% Al escribirlos seguir las siguientes reglas:
+% Ser breve y conciso (nadie lee cosas largas). 
+% Ser específico: no dejar lugar a confusiones.
+% Expresar los requerimientos en términos que sean cuantificables y medibles.
 
-Indicar claramente cuál es la prioridad entre los distintos requerimientos y si hay requerimientos opcionales. 
-
-No olvidarse de que los requerimientos incluyen a las regulaciones y normas vigentes!!!
-
-Y al escribirlos seguir las siguientes reglas:
-\begin{itemize}
-	\item Ser breve y conciso (nadie lee cosas largas). 
-	\item Ser específico: no dejar lugar a confusiones.
-	\item Expresar los requerimientos en términos que sean cuantificables y medibles.
-\end{itemize}
-
-\end{consigna}
 
 \section{7. Historias de usuarios (\textit{Product backlog})}
 \label{sec:backlog}
@@ -297,9 +385,7 @@ Se debe indicar explícitamente el criterio para calcular los \textit{story poin
 \section{8. Entregables principales del proyecto}
 \label{sec:entregables}
 
-\begin{consigna}{red}
-
-Los entregables del proyecto son (ejemplo):
+Los entregables del proyecto son:
 
 \begin{itemize}
 	\item Manual de uso
@@ -310,7 +396,6 @@ Los entregables del proyecto son (ejemplo):
 	\item etc...
 \end{itemize}
 
-\end{consigna}
 
 \section{9. Desglose del trabajo en tareas}
 \label{sec:wbs}
