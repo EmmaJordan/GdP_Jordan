@@ -88,14 +88,13 @@ Buenos Aires, \fechaInicioName
 
 \vspace{2cm}
 
-Por medio de la presente se acuerda con el Ing. \authorname\hspace{1px} que su Trabajo Final de la \degreename\hspace{1px} se titulará ``\ttitle'', consistirá esencialmente en \textcolor{red}{la implementación de un prototipo de un sistema de control de equipos de rayos X}, y tendrá un presupuesto preliminar estimado de \textcolor{red}{600} hs de trabajo y \textcolor{red}{\$100000}, con fecha de inicio \fechaInicioName\hspace{1px} y fecha de presentación pública \fechaFinalName.
+Por medio de la presente se acuerda con el Ing. \authorname\hspace{1px} que su Trabajo Final de la \degreename\hspace{1px} se titulará ``\ttitle'', consistirá esencialmente en la implementación de un prototipo de un sistema de control de equipos de rayos X, y tendrá un presupuesto preliminar estimado de 600 hs de trabajo y \$300000, con fecha de inicio \fechaInicioName\hspace{1px} y fecha de presentación pública \fechaFinalName.
 
 Se adjunta a esta acta la planificación inicial.
 
 \vfill
 
-% Esta parte se construye sola con la información que hayan cargado en el preámbulo del documento y no deben modificarla abion 
-abion sdvdagv 
+% Esta parte se construye sola con la información que hayan cargado en el preámbulo del documento y no deben modificarla
 \begin{table}[ht]
 \centering
 \begin{tabular}{ccc}
@@ -107,62 +106,84 @@ abion sdvdagv
 \end{table}
 
 
+\section{0. Definiciones, Acrónimos y Abreviaturas}
+\label{sec:definiciones}
+\begin{tabular}{l|l}
+	Disparo 		& Exposición controlada de RX \\
+	Empresa		& SIMEN Rx, dedicada a los equipos de RX, cliente del software \\
+	F 			& Frecuencia de trabajo del equipo de RX (excitación del TFRX) \\
+	Filamento	& Filamento dentro del Tubo de RX, el cual emite los electrones \\
+	FS 			& Fluoro Scopia, exposición  de mayor duración y menor potencia \\
+	HF 			& Alta frecuencia, en equipos modernos, F > 14kHz \\
+	kV 			& Tensión de trabajo en el secundario del TFRX \\
+	LF 			& Baja frecuencia, en equipos convencionales, F < 400Hz \\
+	Línea		& Tensión de alimentación del equipo de RX (típica 220V, 50Hz) \\
+	mA			& Corriente de filamento en el primario del TFRX \\
+	N/A			& No aplica \\
+	Preparación	& Etapa previa al Disparo, en la cual se enciende el Filamento \\
+	PWM			& Modulación por ancho de pulsos \\
+	RX			& Rayos X \\
+	SCRX			& Software de Control de Rayos X \\
+	Técnicos		& Técnicos radiólogos, usuarios del software \\
+	TFRX			& Transformador de RX, eleva la tensión a aplicar en el Tubo de RX \\
+	Tubo de RX	& Ampolla en vacío dentro de la cual se generan los RX \\
+\end{tabular} 
+
 
 
 \section{1. Descripción técnica-conceptual del proyecto a realizar}
 \label{sec:descripcion}
 
+El proyecto consiste en el diseño, construcción y puesta en marcha de un prototipo de sistema de control genérico de equipos de rayos X, para la Empresa SIMEN Rx, en adelante la Empresa. El software a desarrollar llevará el nombre comercial de SCRX (Software de Control para equipos de Rayos X).
 
-\begin{consigna}{red} % El bloque "consigna" se usa para poner texto en rojo y dar una pequeña ayuda sobre cómo completar la sección
+La Empresa, radicada en el departamento de Godoy Cruz de la ciudad de Mendoza y fundada en 1993, cumplirá el rol de cliente del software en cuestión. A su vez, la Empresa tiene como sus propios clientes a los dueños de hospitales, clínicas, veterinarias, particulares, etc. En todos los casos, los que finalmente manejan los equipos son los Técnicos radiólogos a cargo, en adelante los Técnicos, los cuales cumplirán el rol de usuarios del software en cuestión.
 
-El objetivo es que el lector en una o dos páginas entienda de qué se trata el proyecto y cuáles son sus desafíos, su motivación y su importancia.
+La Empresa se dedica a los equipos hospitalarios, con especialización en rayos X. Actualmente cuenta con servicios de venta, reparación, traslado, instalación, servicio técnico y mantenimiento preventivo y correctivo de equipos de rayos X y es líder del mercado en la zona Cuyo del país. Utiliza métodos de electrónica general y de potencia en equipos convencionales (de baja frecuencia, en adelante LF) y modernos (de alta frecuencia, en adelante HF), además de software y programación de microcontroladores para la etapa de control. Otros procesos que realiza la Empresa están relacionados con el mecanizado de precisión, torneado, fresado, soldadura, corte, etc. También realiza montaje mecánico en general.
 
-Se debe destacar claramente cuál es el valor que agrega el proyecto a realizar. ``El presente proyecto se destaca especialmente por incorporar tal cosa... Esto lo diferencia de otros sistemas similares en que ...''
+La Empresa requiere de un sistema embebido que permita la selección y control de todas las variables involucradas en un estudio de radioterapia, tales como tensión de alimentación, tensión de trabajo del equipo, corriente de filamento, tiempo de Disparo, selección de foco, control de Preparación y Disparo, entre otras. El sistema a desarrollar debe cumplir con determinadas pautas de seguridad y debe ser capaz de adaptarse a equipos tanto convencionales como modernos, así como también a situaciones particulares que solicite cada cliente de la Empresa. Deberá además mostrar toda la información necesaria para el correcto uso del equipo a los Técnicos, mediante un display y/o algún tipo de interfaz gráfica en computadora/celular.
 
-Puede ser útil incluir en esta sección la respuesta a alguna de estas preguntas:
+% La regla es que las figuras nunca pueden ir antes de ser mencionadas en el texto, porque sino el lector no entiende por qué de pronto aparece una figura.
 
-\begin{itemize}
-	\item ¿Cómo se vincula este proyecto con la misión de la organización?
-	\item ¿Cómo se inserta este proyecto en el modelo de negocio de la organización?
-	\item ¿Ayuda a la explicación si se incluye un lienzo Canvas del Modelo de Negocio?
-	\item ¿En qué estado del ciclo de vida está el producto que se desea reemplazar o mejorar?
-	\item ¿Cuáles son las necesidades que debe satisfacer?
-	\item ¿Por dónde pasa la innovación?
-\end{itemize}
+%Los colores usados en el diagrama deben ser adecuados, tal que ayuden a comprender mejor el diagrama, preferentemente en la gama de colores pastel.
 
-La descripción técnica-conceptual \textbf{debe incluir al menos un diagrama en bloques del sistema} y una frase como la siguiente: ``En la Figura \ref{fig:diagBloques} se presenta el diagrama en bloques del sistema. Se observa que...''. Luego recién más abajo de haber puesto esta frase, se pone la figura. La regla es que las figuras nunca pueden ir antes de ser mencionadas en el texto, porque sino el lector no entiende por qué de pronto aparece una figura.
-
-%\vspace{25px}
+En la Figura \ref{fig:diagBloques} se presenta el diagrama en bloques del sistema. 
 
 \begin{figure}[htpb]
 \centering 
-\includegraphics[width=.5\textwidth]{./Figuras/diagBloques.png}
+\includegraphics[width=.6\textwidth]{./Figuras/diagBloques.png}
 \caption{Diagrama en bloques del sistema}
 \label{fig:diagBloques}
 \end{figure}
-
 \vspace{25px}
 
-El tamaño de la tipografía en TODAS las figuras debe ser adecuado para que NO pase lo que ocurre acá, donde el lector debe esforzarse para poder leer el texto. Los colores usados en el diagrama deben ser adecuados, tal que ayuden a comprender mejor el diagrama, preferentemente en la gama de colores pastel.
-\end{consigna}
+Se observa que el sistema será capaz de leer variables físicas del equipo mediante sus entradas analógicas. Placas electrónicas externas se encargan de traducir dichas variables a tensiones en el rango de 0-Vcc, compatibles con el microcontrolador. Por otro lado, leerá entradas tanto de pulsadores (Preparación, Disparo, etc.) como de un teclado matricial, así como también permitirá la activación de etapas de potencia, ya sea con señales lógicas ON/OFF o de Modulación de Ancho de pulsos, con estrategias de control acorde a la aplicación. Se podrá comunicar con una computadora de control  u otros dispositivos mediante la interfaz serie asíncrona UART. Por último, mostrará toda la información en un Display alfanumérico para interactuar con el usuario.
 
+El desafío es brindar a cada cliente de la Empresa la posibilidad de adquirir un equipo nuevo o actualizar el que ya posee, con tecnología moderna, confiable, segura y duradera, brindando comodidad y practicidad en su uso, permitiendo ajustar las variables del equipo para maximizar su rendimiento y calidad en la imagen radiográfica final. Además, se busca que esta solución sea de un costo razonable,  para incrementar la posibilidad de su adquisición a todo tipo de clientes, tales como veterinarios y radiólogos independientes. 
+
+El camino hacia la consecución de este objetivo ya comenzó hace dos años, resolviendo problemas modularmente mediante sistemas embebidos con microcontroladores PIC y AVR, y otros sistemas electrónicos interconectados entre sí. Se quiere dar un salto tecnológico a microcontroladores más potentes, que permitan lograr mayor alcance y funcionalidades. Se busca también vincular los sistemas, antes independientes, minimizando espacios físicos, costos, tiempos de instalación y fallas posibles; y maximizando la posibilidad de incorporar nuevas funcionalidades en el futuro.
+ 
+%El objetivo es que el lector en una o dos páginas entienda de qué se trata el proyecto y cuáles son sus desafíos, su motivación y su importancia.
+
+%Se debe destacar claramente cuál es el valor que agrega el proyecto a realizar. ``El presente proyecto se destaca especialmente por incorporar tal cosa... Esto lo diferencia de otros sistemas similares en que ...''
+
+%Puede ser útil incluir en esta sección la respuesta a alguna de estas preguntas:
+%¿Cómo se vincula este proyecto con la misión de la organización?
+%¿Cómo se inserta este proyecto en el modelo de negocio de la organización?
+%¿Ayuda a la explicación si se incluye un lienzo Canvas del Modelo de Negocio?
+%¿En qué estado del ciclo de vida está el producto que se desea reemplazar o mejorar?
+%¿Cuáles son las necesidades que debe satisfacer?
+%¿Por dónde pasa la innovación?
 
 \section{2. Identificación y análisis de los interesados}
 \label{sec:interesados}
 
-\begin{consigna}{red} 
-Nota: (borrar esto y todas las consignas en color rojo antes de entregar este documento).
- 
-Es inusual que una misma persona esté en más de un rol, incluso en proyectos chicos.
- 
-Si se considera que una persona cumple dos o más roles, entonces sólo dejarla en el rol más importante. Por ejemplo:
-
-\begin{itemize}
-\item Si una persona es Cliente pero también colabora u orienta, dejarla solo como Cliente.
-\item Si una persona es el Responsable, no debe ser colocado también como Miembro del equipo.
-\end{itemize}
-
-Pero en cambio sí es usual que el Cliente y el Auspiciante sean el mismo, por ejemplo.
+% Es inusual que una misma persona esté en más de un rol, incluso en proyectos chicos. 
+% Si se considera que una persona cumple dos o más roles, entonces sólo dejarla en el rol más importante. Por ejemplo:
+%\begin{itemize}
+%\item Si una persona es Cliente pero también colabora u orienta, dejarla solo como Cliente.
+%\item Si una persona es el Responsable, no debe ser colocado también como Miembro del equipo.
+%\end{itemize}
+% Pero en cambio sí es usual que el Cliente y el Auspiciante sean el mismo, por ejemplo.
 
 \begin{table}[ht]
 %\caption{Identificación de los interesados}
@@ -170,80 +191,55 @@ Pero en cambio sí es usual que el Cliente y el Auspiciante sean el mismo, por e
 \begin{tabularx}{\linewidth}{@{}|l|X|X|l|@{}}
 \hline
 \rowcolor[HTML]{C0C0C0} 
-Rol           & Nombre y Apellido & Organización 	& Puesto 	\\ \hline
-Auspiciante   &                   &              	&        	\\ \hline
-Cliente       & \clientename      &\empclientename	&        	\\ \hline
-Impulsor      &                   &              	&        	\\ \hline
-Responsable   & \authorname       & FIUBA        	& Alumno 	\\ \hline
-Colaboradores &                   &              	&        	\\ \hline
-Orientador    & \supname	      & \pertesupname 	& Director Trabajo final \\ \hline
-Equipo        & miembro1 \newline 
-				miembro2          &              	&        	\\ \hline
-Opositores    &                   &              	&        	\\ \hline
-Usuario final &                   &              	&        	\\ \hline
+Rol           	& Nombre y Apellido & Organización 		& Puesto 					\\ \hline
+Auspiciante   	& \clientename      & \empclientename  	& Director Administrativo    \\ \hline
+Cliente       	& \clientename      & \empclientename	& Director Administrativo    \\ \hline
+Responsable   	& \authorname       & FIUBA        		& Alumno 					\\ \hline
+Colaboradores 	& Cristian Vatri    & ECAVSA   			& Circuitos Impresos			\\ \newline
+				& Alejo Vila        & Kraneal 			& Impresión 3D  				\\ \hline
+Orientador    	& \supname	        & \pertesupname 		& Director Trabajo final 	\\ \hline
+Usuario final 	& Daniel Daza       & \empclientename	& Técnico 					\\ \hline
 \end{tabularx}
 \end{table}
 
-El Director suele ser uno de los Orientadores.
+%El Director suele ser uno de los Orientadores.
+%No dejar celdas vacías; si no hay nada que poner en una celda colocar un signo ``-''.
+%No dejar filas vacías; si no hay nada que poner en una fila entonces eliminarla.
 
-No dejar celdas vacías; si no hay nada que poner en una celda colocar un signo ``-''.
-
-No dejar filas vacías; si no hay nada que poner en una fila entonces eliminarla.
-
-Es deseable listar a continuación las principales características de cada interesado.
+A continuación se listan las principales características de cada interesado.
  
-Por ejemplo:
 \begin{itemize}
-	\item Auspiciante: es riguroso y exigente con la rendición de gastos. Tener mucho cuidado con esto.
-	\item Equipo: Juan Perez, suele pedir licencia porque tiene un familiar con una enfermedad. Planificar considerando esto.
-	\item Orientador: María Gómez va a poder ayudar mucho con la definición de los requerimientos.
+	\item Auspiciante: siempre busca agregar valor al Usuario. Estar atento a sus recomendaciones.
+	\item Colaboradores: es difícil estimar los tiempos de sus trabajos, muchas veces porque algunas demoras no dependen en forma directa de ellos. Planificar con tiempo y consultar a menudo su avance.
+	\item Orientador: está siempre muy ocupado, organizar y optimizar las consultas.
+	\item Usuario final: intenta todas las formas posibles de hacer fallar el equipo hasta que lo logra. Si pasa su prueba, el sistema es muy robusto.
 \end{itemize}
-
-\end{consigna}
-
 
 
 \section{3. Propósito del proyecto}
 \label{sec:proposito}
 
-\begin{consigna}{red}
-¿Por qué se hace el proyecto? ¿Qué se quiere lograr? 
-
-Se recomienda que sea solo un párrafo que empiece diciendo ``El propósito de este proyecto es...''.
-\end{consigna}
+El propósito de este proyecto es brindar, tanto a los clientes existentes de la Empresa como a nuevos clientes, la posibilidad de adquirir un equipo nuevo o actualizar el que ya poseen, agregando valor a su trabajo diario. Será prioridad que esta solución sea de un costo razonable, para incrementar la posibilidad de su adquisición a mayor cantidad de clientes. 
 
 \section{4. Alcance del proyecto}
 \label{sec:alcance}
 
-\begin{consigna}{red}
-¿Qué se incluye y que no se incluye en este proyecto?
+El presente proyecto incluye el diseño, construcción y prueba de funcionamiento de un prototipo basado en sistema embebido para el control genérico de equipos de rayos X, capaz de interactuar con el Técnico para que éste pueda configurar los parámetros necesarios del equipo y observar la información en un display o interfaz. 
 
-Se refiere al trabajo a hacer para entregar el producto o resultado especificado. 
-
-Explicitar todo lo quede comprendido dentro del alcance del proyecto.
-
-Explicitar además todo lo que no quede incluido (``El presente proyecto no incluye...'')
-
-\end{consigna}
-
+El presente proyecto no incluye la comercialización del sistema, su inclusión dentro de cada equipo ni la creación de la interfaz mecánica entre el equipo y el sistema. Tampoco se proveen las fuentes de alimentación requeridas, así como toda instalación eléctrica. 
 
 \section{5. Supuestos del proyecto}
 \label{sec:supuestos}
 
-Para el desarrollo del presente proyecto se supone que se tendrá disponibilidad y accesibilidad a cada equipo de RX a los que se desee introducir el SCRX, para interactuar durante el desarrollo del software, con la posibilidad de realizar pruebas y calibración. 
-Se supone también que se tendrán los instrumentos necesarios para la medición de todas las variables necesarias del sistema, a  saber: osciloscopio digital de dos canales y 1 MHz de velocidad; multímetro con capacidad de lectura de tensiones alternas hasta 700 Vca, tensiones continuas hasta 500 Vcc, corrientes desde 1 uA hasta 10 A, continuidad, juntura de diodos, capacidad hasta 10 uF; inductímetro con capacidad de lectura de inductancias desde 1 uH hasta 10 H, dosímetro para detección y medición de radiación ionizante.
-Por último, se supone que se tomarán los recaudos necesarios para no exponerse a la radiación en ninguna circunstancia, a saber: chalecos, vidrios y cajones plomados en buenas condiciones.
-
-\begin{consigna}{red}
-``Para el desarrollo del presente proyecto se supone que: ...''
+Para el desarrollo del presente proyecto se supone que:
 
 \begin{itemize}
-	\item Supuesto 1
-	\item Supuesto 2...
+	\item Se tendrá disponibilidad y accesibilidad a cada equipo de RX al que se desee introducir el SCRX, para interactuar durante el desarrollo del software, con la posibilidad de realizar pruebas y calibración. 
+	\item Se tendrán los instrumentos necesarios para la medición de todas las variables necesarias del sistema, a  saber: osciloscopio digital de dos canales y 1 MHz de velocidad; multímetro con capacidad de lectura de tensiones alternas hasta 700 Vca, tensiones continuas hasta 500 Vcc, corrientes desde 1 uA hasta 10 A, continuidad, juntura de diodos, capacidad hasta 10 uF; inductímetro con capacidad de lectura de inductancias desde 1 uH hasta 10 H, dosímetro para detección y medición de radiación ionizante.
+	\item Se tomarán los recaudos necesarios para no exponerse a la radiación en ninguna circunstancia, a saber: chalecos, vidrios y cajones plomados en buenas condiciones.
 \end{itemize}
 
-Por ejemplo, se podrían incluir supuestos respecto a disponibilidad de tiempo y recursos humanos y materiales, sobre la factibilidad técnica de distintos aspectos del proyecto, sobre otras cuestiones que sean necesarias para el éxito del proyecto como condiciones macroeconómicas o reglamentarias.
-\end{consigna}
+%Por ejemplo, se podrían incluir supuestos respecto a disponibilidad de tiempo y recursos humanos y materiales, sobre la factibilidad técnica de distintos aspectos del proyecto, sobre otras cuestiones que sean necesarias para el éxito del proyecto como condiciones macroeconómicas o reglamentarias.
 
 \section{6. Requerimientos}
 \label{sec:requerimientos}
